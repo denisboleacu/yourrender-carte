@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YourRender</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --em:#10b981;--em-soft:#5ee0b5;--bg:#040a08;--card-top:#0c1714;--card-bot:#070f0d;
+    --ink:#eaf2ee;--ink2:#d7e2dd;--muted:#9bb0a8;--line:rgba(255,255,255,.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px 16px;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    background:radial-gradient(800px 520px at 50% -5%,rgba(16,185,129,.13),transparent 62%),var(--bg);
+    -webkit-font-smoothing:antialiased;}
+  .lang{position:fixed;top:16px;right:16px;z-index:10;display:flex;gap:2px;
+    background:rgba(10,20,17,.7);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:999px;padding:4px;}
+  .lang button{font-family:inherit;font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--muted);
+    background:none;border:0;padding:6px 13px;border-radius:999px;cursor:pointer;transition:.2s;}
+  .lang button.on{background:var(--em);color:#04130d;}
+  .card{position:relative;z-index:2;width:100%;max-width:412px;
+    background:radial-gradient(460px 320px at 78% -8%,rgba(16,185,129,.16),transparent 60%),linear-gradient(168deg,var(--card-top),var(--card-bot));
+    border:1px solid var(--line);border-radius:22px;padding:40px 36px 32px;
+    box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(16,185,129,.08),0 0 60px rgba(16,185,129,.07);
+    overflow:hidden;}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;z-index:1;
+    background:linear-gradient(90deg,transparent,var(--em),transparent);}
+  .fx{position:absolute;inset:0;z-index:-1;width:100%;height:100%;}
+  .card::after{content:"";position:absolute;z-index:-1;right:-70px;bottom:-70px;
+    width:300px;height:300px;background:url('yr-icon.png') center/contain no-repeat;opacity:.05;pointer-events:none;}
+  .corner{position:absolute;width:17px;height:17px;z-index:1;border:1.5px solid rgba(16,185,129,.5);pointer-events:none;}
+  .corner.tl{top:13px;left:13px;border-right:0;border-bottom:0;border-radius:6px 0 0 0;}
+  .corner.br{bottom:13px;right:13px;border-left:0;border-top:0;border-radius:0 0 6px 0;}
+  .head{display:flex;align-items:center;gap:11px;margin-bottom:24px;}
+  .mark{width:42px;height:42px;flex:0 0 42px;display:block;filter:drop-shadow(0 4px 14px rgba(16,185,129,.4));}
+  .htxt .nm{font-size:15px;font-weight:700;letter-spacing:.3px;color:var(--ink);}
+  .htxt .nm b{color:var(--em);font-weight:700;}
+  .htxt .sub{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+  .htxt .hq{font-size:10px;font-weight:500;letter-spacing:.3px;color:var(--em-soft);margin-top:3px;}
+  .lead{font-size:20px;font-weight:700;letter-spacing:-.4px;line-height:1.34;color:var(--ink);margin-bottom:22px;}
+  .lead .hl{color:var(--em-soft);font-weight:700;}
+  .yr{color:var(--ink);font-weight:700;}
+  .yr b{color:var(--em);font-weight:700;}
+  .sect{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--em-soft);margin:2px 0 14px;}
+  .feat{display:flex;gap:11px;align-items:flex-start;margin-bottom:13px;}
+  .feat .ic{flex:0 0 22px;width:22px;height:22px;border-radius:7px;background:rgba(16,185,129,.16);color:var(--em-soft);
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-top:1px;}
+  .feat .ft{font-size:13.5px;line-height:1.5;color:var(--ink2);}
+  .feat .ft b{color:var(--ink);font-weight:700;}
+  .guar{margin:20px 0 6px;padding:13px 15px;border:1px solid rgba(16,185,129,.3);border-radius:12px;
+    background:rgba(16,185,129,.06);font-size:13px;line-height:1.55;color:var(--em-soft);font-weight:600;text-align:center;}
+  .rule{height:1px;background:var(--line);margin:20px 0 18px;}
+  .invite .big{font-size:15.5px;font-weight:700;color:var(--ink);letter-spacing:-.2px;line-height:1.35;}
+  .invite .sub2{font-size:13.5px;color:var(--em-soft);margin-top:4px;}
+  .oralt{text-align:center;font-size:10.5px;letter-spacing:.5px;color:var(--muted);margin:18px 0 9px;}
+  .foot{display:flex;align-items:center;gap:12px;margin-top:0;padding:12px 14px;border:1px solid rgba(16,185,129,.34);border-radius:12px;background:rgba(16,185,129,.06);text-decoration:none;transition:.2s;}
+  .foot:hover{border-color:rgba(16,185,129,.62);background:rgba(16,185,129,.11);transform:translateY(-1px);}
+  .foot .wa{width:34px;height:34px;flex:0 0 34px;display:flex;align-items:center;justify-content:center;border-radius:9px;background:rgba(16,185,129,.16);color:var(--em-soft);}
+  .foot .who{font-size:14px;font-weight:700;color:var(--ink);}
+  .foot .chev{flex:0 0 auto;color:var(--em-soft);font-size:22px;font-weight:700;line-height:1;}
+  .role{font-weight:500;color:var(--em-soft);}
+  .foot .fl{flex:1;display:flex;flex-direction:column;gap:2px;}
+  .foot .dlang{font-size:10.5px;font-weight:500;letter-spacing:1.2px;color:var(--em-soft);}
+  .foot .dnote{font-size:11px;font-weight:600;color:var(--em-soft);margin-top:1px;}
+  .foot.pri{margin-top:16px;border:1px solid var(--em);background:linear-gradient(135deg,rgba(16,185,129,.20),rgba(16,185,129,.08));box-shadow:0 10px 24px rgba(16,185,129,.16);}
+  .foot.pri:hover{border-color:var(--em-soft);background:linear-gradient(135deg,rgba(16,185,129,.27),rgba(16,185,129,.13));}
+  .foot.pri .wa{background:var(--em);color:#04130d;}
+  .foot.pri .dnote{color:var(--ink);}
+  @media(max-width:412px){.card{padding:32px 24px 26px;}.lead{font-size:18px;}}
+</style>
+</head>
+<body>
+
+<div class="lang">
+  <button id="b-ro" class="on" onclick="setLang('ro')">RO</button>
+  <button id="b-ru" onclick="setLang('ru')">RU</button>
+  <button id="b-en" onclick="setLang('en')">EN</button>
+</div>
+
+<div class="card">
+  <canvas class="fx" id="fx"></canvas>
+  <i class="corner tl"></i><i class="corner br"></i>
+
+  <div class="head">
+    <img class="mark" src="yr-icon.png" alt="YourRender">
+    <div class="htxt">
+      <div class="nm">Your<b>Render</b></div>
+      <div class="sub">Empire OS · AI</div>
+      <div class="hq">🇨🇭 Swiss Company</div>
+    </div>
+  </div>
+
+  <div class="lead"><span id="hello" data-ro="Salut!" data-ru="Привет!" data-en="Hi!">Salut!</span><br><span id="lead2" data-ro="Hai să-ți arăt <span class='hl'>concret</span> cum <span class='yr'>Your<b>Render</b></span> îți aduce mai mulți clienți." data-ru="Давай покажу <span class='hl'>конкретно</span>, как <span class='yr'>Your<b>Render</b></span> приводит тебе больше клиентов." data-en="Let me show you <span class='hl'>concretely</span> how <span class='yr'>Your<b>Render</b></span> brings you more clients.">Hai să-ți arăt <span class="hl">concret</span> cum <span class="yr">Your<b>Render</b></span> îți aduce mai mulți clienți.</span></div>
+
+  <div class="sect" data-ro="Ce face pentru afacerea ta:" data-ru="Что он делает для твоего дела:" data-en="What it does for your business:">Ce face pentru afacerea ta:</div>
+
+  <div class="feat"><span class="ic">1</span><span class="ft" data-ro="<b>Răspunde singur clienților tăi</b>, non-stop — pe WhatsApp, Facebook și pe site. Niciun client pierdut, nici noaptea." data-ru="<b>Сам отвечает твоим клиентам</b>, без остановки — в WhatsApp, Facebook и на сайте. Ни один клиент не потерян, даже ночью." data-en="<b>Answers your clients on its own</b>, non-stop — on WhatsApp, Facebook and your site. No client lost, not even at night."><b>Răspunde singur clienților tăi</b>, non-stop — pe WhatsApp, Facebook și pe site. Niciun client pierdut, nici noaptea.</span></div>
+
+  <div class="feat"><span class="ic">2</span><span class="ft" data-ro="<b>Scrie și publică singur</b> pe rețelele tale — postări, reclame, răspunsuri la comentarii." data-ru="<b>Сам пишет и публикует</b> в твоих соцсетях — посты, рекламу, ответы на комментарии." data-en="<b>Writes and posts on its own</b> across your social media — posts, ads, replies to comments."><b>Scrie și publică singur</b> pe rețelele tale — postări, reclame, răspunsuri la comentarii.</span></div>
+
+  <div class="feat"><span class="ic">3</span><span class="ft" data-ro="<b>Aduce programări și comenzi</b> — întreabă, lămurește clientul și îl programează, fără tine." data-ru="<b>Приводит записи и заказы</b> — спрашивает, объясняет клиенту и записывает его, без тебя." data-en="<b>Brings appointments and orders</b> — it asks, qualifies the client and books them, without you."><b>Aduce programări și comenzi</b> — întreabă, lămurește clientul și îl programează, fără tine.</span></div>
+
+  <div class="feat"><span class="ic">4</span><span class="ft" data-ro="<b>Lucrează pe numele firmei tale</b>, non-stop — fără salariu, fără concediu." data-ru="<b>Работает на имя твоей фирмы</b>, без остановки — без зарплаты, без отпуска." data-en="<b>Works under your company's name</b>, non-stop — no salary, no vacation."><b>Lucrează pe numele firmei tale</b>, non-stop — fără salariu, fără concediu.</span></div>
+
+  <div class="guar" data-ro="Pe numele tău. Plătești doar dacă aduce rezultate. Poți pleca oricând. 🤝" data-ru="На твоё имя. Платишь только если есть результат. Уйти можешь в любой момент. 🤝" data-en="Under your name. You pay only if it brings results. Leave anytime. 🤝">Pe numele tău. Plătești doar dacă aduce rezultate. Poți pleca oricând. 🤝</div>
+
+  <div class="rule"></div>
+
+  <div class="invite">
+    <div class="big" data-ro="Vrei să vezi exact cum ar arăta pentru afacerea ta?" data-ru="Хочешь увидеть, как это будет именно для твоего дела?" data-en="Want to see exactly how it'd look for your business?">Vrei să vezi exact cum ar arăta pentru afacerea ta?</div>
+    <div class="sub2" data-ro="Îți facem un exemplu concret, gratis — în 15 minute." data-ru="Сделаем тебе конкретный пример, бесплатно — за 15 минут." data-en="We'll build you a concrete example, free — in 15 minutes.">Îți facem un exemplu concret, gratis — în 15 minute.</div>
+    <a class="foot pri" href="https://wa.me/4526224246" target="_blank">
+      <span class="wa"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01C17.18 3.03 14.69 2 12.04 2zm0 1.67c2.2 0 4.27.86 5.82 2.41a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24zm4.52 9.5c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42-.14 0-.31-.02-.47-.02-.16 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg></span>
+      <span class="fl">
+        <span class="who">Jacky Buensoz · <span class="role">Founder</span></span>
+        <span class="dnote" data-ro="Vreau exemplul concret" data-ru="Хочу конкретный пример" data-en="I want the concrete example">Vreau exemplul concret</span>
+        <span class="dlang" data-ro="🌐 EN · FR · IT · direct cu Jacky" data-ru="🌐 EN · FR · IT · напрямую с Jacky" data-en="🌐 EN · FR · IT · straight to Jacky">🌐 EN · FR · IT · direct cu Jacky</span>
+      </span>
+      <span class="chev">›</span>
+    </a>
+  </div>
+
+  <div class="oralt" data-ro="— sau scrie-mi direct mie —" data-ru="— или напиши напрямую мне —" data-en="— or message me directly —">— sau scrie-mi direct mie —</div>
+
+  <a class="foot" href="https://wa.me/4555244984" target="_blank">
+    <span class="wa"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01C17.18 3.03 14.69 2 12.04 2zm0 1.67c2.2 0 4.27.86 5.82 2.41a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24zm4.52 9.5c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42-.14 0-.31-.02-.47-.02-.16 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg></span>
+    <span class="fl">
+      <span class="who">Denis Boleacu · <span class="role">Cofounder</span></span>
+      <span class="dnote" data-ro="Scrie-mi pe WhatsApp — îți aranjez eu întâlnirea" data-ru="Напиши мне в WhatsApp — я устрою встречу" data-en="Message me on WhatsApp — I'll set up the meeting">Scrie-mi pe WhatsApp — îți aranjez eu întâlnirea</span>
+      <span class="dlang">🌐 RO · RU · UKR · +45 55 24 49 84</span>
+    </span>
+    <span class="chev">›</span>
+  </a>
+</div>
+
+<script>
+  var GREET={ro:'Salut',ru:'Привет',en:'Hi'};
+  var clientName=null;
+  var gender=null;
+  function applyName(l){
+    var h=document.getElementById('hello');
+    if(clientName){h.textContent=GREET[l]+', '+clientName+'!';}
+  }
+  function setLang(l){
+    if(['ro','ru','en'].indexOf(l)<0)l='ro';
+    document.documentElement.lang=l;
+    ['ro','ru','en'].forEach(function(k){document.getElementById('b-'+k).classList.toggle('on',l===k);});
+    document.querySelectorAll('[data-'+l+']').forEach(function(el){var a='data-'+l;if(gender==='f'&&el.hasAttribute('data-'+l+'f'))a='data-'+l+'f';el.innerHTML=el.getAttribute(a);});
+    applyName(l);
+  }
+  (function(){
+    try{
+      var q=new URLSearchParams(location.search);
+      var n=q.get('n'); if(n){n=n.trim().replace(/[<>]/g,'');if(n)clientName=n;}
+      var g=q.get('g'); if(g)gender=g.toLowerCase();
+      var lang=(q.get('lang')||'ro').toLowerCase();
+      setLang(lang);
+    }catch(e){setLang('ro');}
+  })();
+
+  // rețea neuronală — fundal futurist AI
+  var c=document.getElementById('fx'),x=c.getContext('2d'),card=c.parentElement,W,H,P=[];
+  function size(){var r=card.getBoundingClientRect();W=c.width=r.width;H=c.height=r.height;P=[];var n=Math.max(26,Math.round(W*H/9000));
+    for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22});}
+  function loop(){x.clearRect(0,0,W,H);
+    for(var i=0;i<P.length;i++){var p=P[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      x.beginPath();x.arc(p.x,p.y,1.2,0,7);x.fillStyle='rgba(94,224,181,.38)';x.fill();
+      for(var j=i+1;j<P.length;j++){var q=P[j],dx=p.x-q.x,dy=p.y-q.y,dd=dx*dx+dy*dy;
+        if(dd<10000){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle='rgba(16,185,129,'+(.09*(1-dd/10000))+')';x.lineWidth=.6;x.stroke();}}}
+    requestAnimationFrame(loop);}
+  size();loop();addEventListener('resize',size);
+</script>
+</body>
+</html>

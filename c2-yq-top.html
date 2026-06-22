@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ro" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
+<title>YourQuantix</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--em:#10b981;--em-soft:#5ee0b5;--bg:#040a08;--card-top:#0c1714;--card-bot:#070f0d;--ink:#eaf2ee;--ink2:#d7e2dd;--muted:#9bb0a8;--line:rgba(255,255,255,.07);}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px 16px;font-family:'Inter',system-ui,sans-serif;background:radial-gradient(800px 520px at 50% -5%,rgba(16,185,129,.13),transparent 62%),var(--bg);-webkit-font-smoothing:antialiased;}
+  .tag{position:fixed;top:14px;left:14px;z-index:10;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--em-soft);background:rgba(10,20,17,.7);border:1px solid var(--line);border-radius:999px;padding:5px 12px;}
+  .card{position:relative;z-index:2;width:100%;max-width:412px;background:radial-gradient(460px 320px at 78% -8%,rgba(16,185,129,.16),transparent 60%),linear-gradient(168deg,var(--card-top),var(--card-bot));border:1px solid var(--line);border-radius:22px;padding:38px 34px 30px;box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.05),0 0 60px rgba(16,185,129,.07);overflow:hidden;}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--em),transparent);}
+  .fx{position:absolute;inset:0;z-index:-1;width:100%;height:100%;}
+  .corner{position:absolute;width:17px;height:17px;z-index:1;border:1.5px solid rgba(16,185,129,.5);pointer-events:none;}
+  .corner.tl{top:13px;left:13px;border-right:0;border-bottom:0;border-radius:6px 0 0 0;}
+  .corner.br{bottom:13px;right:13px;border-left:0;border-top:0;border-radius:0 0 6px 0;}
+  .head{display:flex;align-items:center;gap:11px;margin-bottom:22px;}
+  .mark{width:42px;height:42px;flex:0 0 42px;display:block;filter:drop-shadow(0 4px 14px rgba(16,185,129,.4));}
+  .nm{font-size:15px;font-weight:700;letter-spacing:.3px;color:var(--ink);}
+  .nm b{color:var(--em);font-weight:700;}
+  .sub{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+  .hq{font-size:10px;font-weight:500;color:var(--em-soft);margin-top:3px;}
+  #hello{display:block;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+  .lead{font-size:20px;font-weight:700;letter-spacing:-.3px;line-height:1.3;color:var(--ink);margin-bottom:14px;}
+  .lead .hl{color:var(--em-soft);}
+  .subh{font-size:13.5px;line-height:1.55;color:var(--ink2);margin-bottom:4px;}
+  .yr{color:var(--ink);font-weight:700;}.yr b{color:var(--em);}
+  .bul{display:flex;flex-direction:column;gap:11px;margin:15px 0 2px;}
+  .bul .b{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;line-height:1.45;color:var(--ink2);}
+  .bul .ck{flex:0 0 19px;width:19px;height:19px;border-radius:50%;background:rgba(16,185,129,.16);color:var(--em-soft);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px;}
+  .bul .b b{color:var(--ink);font-weight:700;}
+  .rule{height:1px;background:var(--line);margin:20px 0 18px;}
+  .big{font-size:15.5px;font-weight:700;color:var(--ink);letter-spacing:-.2px;}
+  .sub2{font-size:13px;color:var(--em-soft);margin-top:4px;}
+  .oralt{text-align:center;font-size:10.5px;letter-spacing:.5px;color:var(--muted);margin:18px 0 9px;}
+  .foot{display:flex;align-items:center;gap:12px;margin-top:0;padding:12px 14px;border:1px solid rgba(16,185,129,.34);border-radius:12px;background:rgba(16,185,129,.06);text-decoration:none;transition:.2s;}
+  .foot:hover{border-color:rgba(16,185,129,.62);background:rgba(16,185,129,.11);transform:translateY(-1px);}
+  .foot .wa{width:34px;height:34px;flex:0 0 34px;display:flex;align-items:center;justify-content:center;border-radius:9px;background:rgba(16,185,129,.16);color:var(--em-soft);}
+  .foot .who{font-size:14px;font-weight:700;color:var(--ink);}
+  .foot .chev{flex:0 0 auto;color:var(--em-soft);font-size:22px;font-weight:700;}
+  .role{font-weight:500;color:var(--em-soft);}
+  .foot .fl{flex:1;display:flex;flex-direction:column;gap:2px;}
+  .foot .dlang{font-size:10.5px;font-weight:500;letter-spacing:1.2px;color:var(--em-soft);}
+  .foot .dnote{font-size:11px;font-weight:600;color:var(--em-soft);margin-top:1px;}
+  .foot.pri{margin-top:16px;border:1px solid var(--em);background:linear-gradient(135deg,rgba(16,185,129,.20),rgba(16,185,129,.08));box-shadow:0 10px 24px rgba(16,185,129,.16);}
+  .foot.pri .wa{background:var(--em);color:#04130d;}
+  .foot.pri .dnote{color:var(--ink);}
+  .foot.pri .dnote .hl{margin-left:7px;color:var(--em-soft);}
+  @media(max-width:412px){.card{padding:32px 22px 26px;}.lead{font-size:18px;}}
+</style>
+</head>
+<body>
+<div class="tag">Cei mai bogați · YourQuantix</div>
+<div class="card">
+  <canvas class="fx" id="fx"></canvas>
+  <i class="corner tl"></i><i class="corner br"></i>
+  <div class="head">
+    <img class="mark" src="yr-icon.png" alt="YourQuantix">
+    <div><div class="nm">Your<b>Quantix</b></div><div class="sub">Nous portons le reste</div><div class="hq">🇨🇭 Maison Suisse</div></div>
+  </div>
+  <span id="hello">Salut!</span>
+  <div class="lead">Tu creezi. <span class="hl">Noi purtăm restul.</span></div>
+  <p class="subh"><span class="yr">Your<b>Quantix</b></span> e casa elvețiană care poartă administrarea, marketingul și clienții afacerii tale — discret, pe numele tău. Tu rămâi la masa de lucru.</p>
+  <div class="bul">
+    <div class="b"><span class="ck">✓</span><span><b>Clienți care vin la tine</b> — atragere continuă, fără să-ți pierzi timpul.</span></div>
+    <div class="b"><span class="ck">✓</span><span><b>Tot ce nu ține de meserie</b> — purtat de noi: site, rețele, reclame, facturi.</span></div>
+    <div class="b"><span class="ck">✓</span><span><b>Pe numele tău</b> — afacerea rămâne a ta; tu decizi, noi executăm.</span></div>
+  </div>
+  <div class="rule"></div>
+  <div class="big">O conversație, între maeștri.</div>
+  <div class="sub2">Selectiv — câțiva clienți pe lună. 🤝</div>
+  <a class="foot pri" href="https://wa.me/4526224246" target="_blank">
+    <span class="wa"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01C17.18 3.03 14.69 2 12.04 2zm0 1.67c2.2 0 4.27.86 5.82 2.41a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24z"/></svg></span>
+    <span class="fl"><span class="who">Jacky Buensoz · <span class="role">Founder</span></span><span class="dnote">Hai să vorbim cu Jacky, <span class="hl" style="color:var(--em-soft)">Direct</span></span><span class="dlang">🌐 EN · FR · IT</span></span>
+    <span class="chev">›</span>
+  </a>
+  <div class="oralt">— sau scrie-mi direct mie —</div>
+  <a class="foot" href="https://wa.me/4555244984" target="_blank">
+    <span class="wa"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01C17.18 3.03 14.69 2 12.04 2zm0 1.67c2.2 0 4.27.86 5.82 2.41a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24z"/></svg></span>
+    <span class="fl"><span class="who">Denis Boleacu · <span class="role">Cofounder</span></span><span class="dnote">Scrie-mi pe WhatsApp — îți aranjez eu întâlnirea</span><span class="dlang">🌐 RO · RU · UKR · +45 55 24 49 84</span></span>
+    <span class="chev">›</span>
+  </a>
+</div>
+<script>
+  (function(){try{var n=new URLSearchParams(location.search).get('n');if(n){n=n.trim().replace(/[<>]/g,'');if(n)document.getElementById('hello').textContent='Salut, '+n+'!';}}catch(e){}})();
+  var c=document.getElementById('fx'),x=c.getContext('2d'),card=c.parentElement,W,H,P=[];
+  function size(){var r=card.getBoundingClientRect();W=c.width=r.width;H=c.height=r.height;P=[];var n=Math.max(26,Math.round(W*H/9000));for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22});}
+  function loop(){x.clearRect(0,0,W,H);for(var i=0;i<P.length;i++){var p=P[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;x.beginPath();x.arc(p.x,p.y,1.2,0,7);x.fillStyle='rgba(94,224,181,.38)';x.fill();for(var j=i+1;j<P.length;j++){var q=P[j],dx=p.x-q.x,dy=p.y-q.y,dd=dx*dx+dy*dy;if(dd<10000){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle='rgba(16,185,129,'+(.09*(1-dd/10000))+')';x.lineWidth=.6;x.stroke();}}}requestAnimationFrame(loop);}
+  size();loop();addEventListener('resize',size);
+</script>
+</body>
+</html>

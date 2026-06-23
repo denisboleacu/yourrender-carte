@@ -89,7 +89,7 @@
   var GREET={ro:'Salut',ru:'Привет',en:'Hi'};
   var clientName=null;
   function applyName(l){var h=document.getElementById('hi');h.textContent=(clientName?GREET[l]+', '+clientName+'! 👋':GREET[l]+'! 👋');}
-  function setLang(l){if(['ro','ru','en'].indexOf(l)<0)l='ro';document.documentElement.lang=l;['ro','ru','en'].forEach(function(k){document.getElementById('b-'+k).classList.toggle('on',l===k);});document.querySelectorAll('[data-'+l+']').forEach(function(el){el.innerHTML=el.getAttribute('data-'+l);});applyName(l);}
+  function setLang(l){if(['ro','ru','en'].indexOf(l)<0)l='ro';document.documentElement.lang=l;['ro','ru','en'].forEach(function(k){document.getElementById('b-'+k).classList.toggle('on',l===k);});document.querySelectorAll('[data-'+l+']').forEach(function(el){el.innerHTML=el.getAttribute('data-'+l);});var _s=(l==='ru')?'/ru':'/en';document.querySelectorAll('a[href^="https://yourrender.ai"]').forEach(function(a){var _art=/artopolis/.test(a.getAttribute('href'));a.href='https://yourrender.ai'+_s+(_art?'/artopolis':'');});applyName(l);}
   (function(){try{var q=new URLSearchParams(location.search);var n=q.get('n');if(n){n=n.trim().replace(/[<>]/g,'');if(n)clientName=n;}var lang=(q.get('lang')||'ro').toLowerCase();setLang(lang);}catch(e){setLang('ro');}})();
   var c=document.getElementById('fx'),x=c.getContext('2d'),card=c.parentElement,W,H,P=[];
   function size(){var r=card.getBoundingClientRect();W=c.width=r.width;H=c.height=r.height;P=[];var n=Math.max(30,Math.round(W*H/9000));for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18});}

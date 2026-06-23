@@ -10,7 +10,9 @@
   :root{--em:#10b981;--em-soft:#5ee0b5;--bg:#040a08;--card-top:#0c1714;--card-bot:#070f0d;--ink:#eaf2ee;--ink2:#d7e2dd;--muted:#9bb0a8;--line:rgba(255,255,255,.07);}
   *{box-sizing:border-box;margin:0;padding:0}
   body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px 16px;font-family:'Inter',system-ui,sans-serif;background:radial-gradient(800px 520px at 50% -5%,rgba(16,185,129,.13),transparent 62%),var(--bg);-webkit-font-smoothing:antialiased;}
-  .tag{position:fixed;top:14px;left:14px;z-index:10;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--em-soft);background:rgba(10,20,17,.7);border:1px solid var(--line);border-radius:999px;padding:5px 12px;}
+  .lang{position:fixed;top:14px;right:14px;z-index:10;display:flex;gap:2px;background:rgba(10,20,17,.7);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:999px;padding:4px;}
+  .lang button{font-family:inherit;font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--muted);background:none;border:0;padding:6px 12px;border-radius:999px;cursor:pointer;transition:.2s;}
+  .lang button.on{background:var(--em);color:#04130d;}
   .card{position:relative;z-index:2;width:100%;max-width:412px;background:radial-gradient(460px 320px at 78% -8%,rgba(16,185,129,.16),transparent 60%),linear-gradient(168deg,var(--card-top),var(--card-bot));border:1px solid var(--line);border-radius:22px;padding:38px 34px 30px;box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.05),0 0 60px rgba(16,185,129,.07);overflow:hidden;}
   .card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--em),transparent);}
   .fx{position:absolute;inset:0;z-index:-1;width:100%;height:100%;}
@@ -29,8 +31,6 @@
   .body p{font-size:14px;line-height:1.62;color:var(--ink2);margin-bottom:12px;}
   .body b{color:var(--ink);font-weight:700;}
   .hl{color:var(--em-soft);font-weight:700;}
-  .lnk{color:var(--em-soft);font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;}
-  .lnk:hover{color:#8df0cf;}
   .ico{height:18px;width:18px;vertical-align:-4px;margin:0 1px 0 5px;border-radius:5px;transition:.2s;}
   a:hover .ico{transform:scale(1.18);}
   .chip{display:inline-flex;align-items:center;gap:3px;margin-left:6px;font-size:9.5px;font-weight:800;letter-spacing:1.5px;color:#04130d;background:var(--em-soft);border-radius:6px;padding:2px 7px;text-decoration:none;vertical-align:middle;transition:.2s;}
@@ -57,7 +57,11 @@
 </style>
 </head>
 <body>
-<div class="tag">În tonul lui Oleg · personal</div>
+<div class="lang">
+  <button id="b-ro" class="on" onclick="setLang('ro')">RO</button>
+  <button id="b-ru" onclick="setLang('ru')">RU</button>
+  <button id="b-en" onclick="setLang('en')">EN</button>
+</div>
 <div class="card">
   <canvas class="fx" id="fx"></canvas>
   <i class="corner tl"></i><i class="corner br"></i>
@@ -65,29 +69,33 @@
     <img class="mark" src="yr-icon.png" alt="YourRender">
     <div><div class="nm">Your<b>Render</b></div><div class="sub">Empire OS · AI</div><div class="hq">🇨🇭 Swiss Company</div></div>
   </div>
-  <span id="hello">Salut!</span>
-  <div class="lead">Nu mai ai timp <span class="hl">de nimic</span>.</div>
+  <span id="hello" data-ro="Salut!" data-ru="Привет!" data-en="Hi!">Salut!</span>
+  <div class="lead" data-ro="Nu mai ai timp <span class='hl'>de nimic</span>." data-ru="У тебя нет времени <span class='hl'>ни на что</span>." data-en="You have no time <span class='hl'>for anything</span>.">Nu mai ai timp <span class="hl">de nimic</span>.</div>
   <div class="body">
-    <p>Tu faci totul — mesaje, telefon, conținut, clienți, vânzări. Eu, <b>Denis</b>, îți aduc <b>YourRender</b><a href="https://yourrender.ai" target="_blank" title="Deschide YourRender"><img class="ico" src="yr-icon.png" alt="YourRender"></a>, un <b>ajutor</b> care preia exact tot ce-ți fură timpul: <span class="hl">o inteligență artificială cu zeci de lucrători digitali</span>, setați pe o tehnologie avansată, ce lucrează în locul tău, <span class="hl">24/7</span>.</p>
-    <p><span class="hl">La noi funcționează deja</span><a class="chip" href="https://yourrender.ai/artopolis" target="_blank" title="Vezi Artopolis live">ARTOPOLIS ↗</a> — nu sunt vorbe. Nu e o agenție de marketing cu oameni scumpi care lucrează doar ziua, nici un program pe care să-l administrezi singur: e <span class="hl">un ajutor eficient, gata pregătit, care merge non-stop, fără zile de odihnă</span>.</p>
+    <p data-ro="Tu faci totul — mesaje, telefon, conținut, clienți, vânzări. Eu, <b>Denis</b>, îți aduc <b>YourRender</b><a href='https://yourrender.ai' target='_blank' title='Deschide YourRender'><img class='ico' src='yr-icon.png' alt='YourRender'></a>, un <b>ajutor</b> care preia exact tot ce-ți fură timpul: <span class='hl'>o inteligență artificială cu zeci de lucrători digitali</span>, setați pe o tehnologie avansată, ce lucrează în locul tău, <span class='hl'>24/7</span>." data-ru="Ты делаешь всё — сообщения, звонки, контент, клиенты, продажи. Я, <b>Денис</b>, привожу тебе <b>YourRender</b><a href='https://yourrender.ai' target='_blank' title='Открыть YourRender'><img class='ico' src='yr-icon.png' alt='YourRender'></a> — <b>помощника</b>, который берёт на себя именно то, что крадёт твоё время: <span class='hl'>искусственный интеллект с десятками цифровых работников</span>, настроенных на передовой технологии, который работает вместо тебя, <span class='hl'>24/7</span>." data-en="You do everything — messages, calls, content, clients, sales. I, <b>Denis</b>, bring you <b>YourRender</b><a href='https://yourrender.ai' target='_blank' title='Open YourRender'><img class='ico' src='yr-icon.png' alt='YourRender'></a>, a <b>helper</b> that takes over exactly what steals your time: <span class='hl'>an artificial intelligence with dozens of digital workers</span>, set up on advanced technology, working in your place, <span class='hl'>24/7</span>.">Tu faci totul — mesaje, telefon, conținut, clienți, vânzări. Eu, <b>Denis</b>, îți aduc <b>YourRender</b><a href="https://yourrender.ai" target="_blank" title="Deschide YourRender"><img class="ico" src="yr-icon.png" alt="YourRender"></a>, un <b>ajutor</b> care preia exact tot ce-ți fură timpul: <span class="hl">o inteligență artificială cu zeci de lucrători digitali</span>, setați pe o tehnologie avansată, ce lucrează în locul tău, <span class="hl">24/7</span>.</p>
+    <p data-ro="<span class='hl'>La noi funcționează deja</span><a class='chip' href='https://yourrender.ai/artopolis' target='_blank' title='Vezi Artopolis live'>ARTOPOLIS ↗</a> — nu sunt vorbe. Nu e o agenție de marketing cu oameni scumpi care lucrează doar ziua, nici un program pe care să-l administrezi singur: e <span class='hl'>un ajutor eficient, gata pregătit, care merge non-stop, fără zile de odihnă</span>." data-ru="<span class='hl'>У нас это уже работает</span><a class='chip' href='https://yourrender.ai/artopolis' target='_blank' title='Смотри Artopolis вживую'>ARTOPOLIS ↗</a> — это не пустые слова. Это не маркетинговое агентство с дорогими людьми, которые работают только днём, и не программа, которой нужно управлять самому: это <span class='hl'>эффективный помощник, уже готовый, который работает без остановки, без выходных</span>." data-en="<span class='hl'>At our place it already works</span><a class='chip' href='https://yourrender.ai/artopolis' target='_blank' title='See Artopolis live'>ARTOPOLIS ↗</a> — these aren't just words. It's not a marketing agency with expensive people who work only by day, nor a program you have to run yourself: it's <span class='hl'>an efficient helper, ready to go, that runs non-stop, with no days off</span>."><span class="hl">La noi funcționează deja</span><a class="chip" href="https://yourrender.ai/artopolis" target="_blank" title="Vezi Artopolis live">ARTOPOLIS ↗</a> — nu sunt vorbe. Nu e o agenție de marketing cu oameni scumpi care lucrează doar ziua, nici un program pe care să-l administrezi singur: e <span class="hl">un ajutor eficient, gata pregătit, care merge non-stop, fără zile de odihnă</span>.</p>
   </div>
   <div class="rule"></div>
-  <div class="big">Vrei să vezi cum ar funcționa la tine? <span class="hl">Scrie-mi un mesaj.</span></div>
-  <div class="sub2">Îți răspund personal — Denis. 🤝</div>
+  <div class="big" data-ro="Vrei să vezi cum ar funcționa la tine? <span class='hl'>Scrie-mi un mesaj.</span>" data-ru="Хочешь увидеть, как это будет работать у тебя? <span class='hl'>Напиши мне.</span>" data-en="Want to see how it would work for you? <span class='hl'>Send me a message.</span>">Vrei să vezi cum ar funcționa la tine? <span class="hl">Scrie-mi un mesaj.</span></div>
+  <div class="sub2" data-ro="Îți răspund personal — Denis. 🤝" data-ru="Отвечу лично — Денис. 🤝" data-en="I'll reply personally — Denis. 🤝">Îți răspund personal — Denis. 🤝</div>
   <a class="foot pri" href="https://wa.me/4555244984" target="_blank" style="margin-top:16px">
     <span class="wa"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01C17.18 3.03 14.69 2 12.04 2zm0 1.67c2.2 0 4.27.86 5.82 2.41a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24z"/></svg></span>
-    <span class="fl"><span class="who">Denis Boleacu · <span class="role">Cofounder</span></span><span class="dnote">Scrie-mi pe WhatsApp, <span class="hl">acum</span></span><span class="dlang">🌐 RO · RU · UKR · +45 55 24 49 84</span></span>
+    <span class="fl"><span class="who">Denis Boleacu · <span class="role">Cofounder</span></span><span class="dnote" data-ro="Scrie-mi pe WhatsApp, <span class='hl'>acum</span>" data-ru="Напиши мне в WhatsApp, <span class='hl'>сейчас</span>" data-en="Message me on WhatsApp, <span class='hl'>now</span>">Scrie-mi pe WhatsApp, <span class="hl">acum</span></span><span class="dlang">🌐 RO · RU · UKR · +45 55 24 49 84</span></span>
     <span class="chev">›</span>
   </a>
-  <div class="oralt">— sau vorbește direct cu fondatorul —</div>
+  <div class="oralt" data-ro="— sau vorbește direct cu fondatorul —" data-ru="— или поговори напрямую с основателем —" data-en="— or talk directly with the founder —">— sau vorbește direct cu fondatorul —</div>
   <a class="foot" href="https://wa.me/4526224246" target="_blank">
     <span class="wa"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01C17.18 3.03 14.69 2 12.04 2zm0 1.67c2.2 0 4.27.86 5.82 2.41a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24z"/></svg></span>
-    <span class="fl"><span class="who">Jacky Buensoz · <span class="role">Founder</span></span><span class="dnote">Direct cu Jacky</span><span class="dlang">🌐 EN · FR · IT</span></span>
+    <span class="fl"><span class="who">Jacky Buensoz · <span class="role">Founder</span></span><span class="dnote" data-ro="Direct cu Jacky" data-ru="Напрямую с Jacky" data-en="Straight to Jacky">Direct cu Jacky</span><span class="dlang">🌐 EN · FR · IT</span></span>
     <span class="chev">›</span>
   </a>
 </div>
 <script>
-  (function(){try{var n=new URLSearchParams(location.search).get('n');if(n){n=n.trim().replace(/[<>]/g,'');if(n)document.getElementById('hello').textContent='Salut, '+n+'!';}}catch(e){}})();
+  var GREET={ro:'Salut',ru:'Привет',en:'Hi'};
+  var clientName=null;
+  function applyName(l){var h=document.getElementById('hello');h.textContent=(clientName?GREET[l]+', '+clientName+'!':GREET[l]+'!');}
+  function setLang(l){if(['ro','ru','en'].indexOf(l)<0)l='ro';document.documentElement.lang=l;['ro','ru','en'].forEach(function(k){document.getElementById('b-'+k).classList.toggle('on',l===k);});document.querySelectorAll('[data-'+l+']').forEach(function(el){el.innerHTML=el.getAttribute('data-'+l);});applyName(l);}
+  (function(){try{var q=new URLSearchParams(location.search);var n=q.get('n');if(n){n=n.trim().replace(/[<>]/g,'');if(n)clientName=n;}var lang=(q.get('lang')||'ro').toLowerCase();setLang(lang);}catch(e){setLang('ro');}})();
   var c=document.getElementById('fx'),x=c.getContext('2d'),card=c.parentElement,W,H,P=[];
   function size(){var r=card.getBoundingClientRect();W=c.width=r.width;H=c.height=r.height;P=[];var n=Math.max(26,Math.round(W*H/9000));for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22});}
   function loop(){x.clearRect(0,0,W,H);for(var i=0;i<P.length;i++){var p=P[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;x.beginPath();x.arc(p.x,p.y,1.2,0,7);x.fillStyle='rgba(94,224,181,.38)';x.fill();for(var j=i+1;j<P.length;j++){var q=P[j],dx=p.x-q.x,dy=p.y-q.y,dd=dx*dx+dy*dy;if(dd<10000){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle='rgba(16,185,129,'+(.09*(1-dd/10000))+')';x.lineWidth=.6;x.stroke();}}}requestAnimationFrame(loop);}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--em:#10b981;--em-soft:#5ee0b5;--bg:#040a08;--card-top:#0c1714;--card-bot:#070f0d;--ink:#eaf2ee;--ink2:#dbe7e1;--muted:#9bb0a8;--line:rgba(255,255,255,.07);}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:#000;-webkit-font-smoothing:antialiased;display:flex;justify-content:center;padding:0;}
+  .card{position:relative;width:540px;background:radial-gradient(560px 380px at 78% -6%,rgba(16,185,129,.17),transparent 60%),linear-gradient(168deg,var(--card-top),var(--card-bot));overflow:hidden;padding:46px 44px 40px;}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--em),transparent);}
+  .fx{position:absolute;inset:0;z-index:0;}
+  .ct{position:relative;z-index:2;}
+  .head{display:flex;align-items:center;gap:13px;margin-bottom:26px;}
+  .mark{width:50px;height:50px;flex:0 0 50px;filter:drop-shadow(0 4px 16px rgba(16,185,129,.45));}
+  .nm{font-size:19px;font-weight:700;letter-spacing:.3px;color:var(--ink);}
+  .nm b{color:var(--em);}
+  .sub{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+  .hq{font-size:11px;font-weight:500;color:var(--em-soft);margin-top:3px;}
+  .hi{font-size:25px;font-weight:800;color:var(--ink);margin-bottom:14px;letter-spacing:-.4px;}
+  .lead{font-size:22px;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:16px;letter-spacing:-.3px;}
+  .lead .g{color:var(--em-soft);}
+  p{font-size:16px;line-height:1.6;color:var(--ink2);margin-bottom:14px;}
+  p b{color:var(--ink);font-weight:700;}
+  .g{color:var(--em-soft);font-weight:700;}
+  .ren{color:var(--em);font-weight:700;}
+  .cta{font-size:17px;font-weight:700;color:var(--ink);line-height:1.4;margin-top:6px;}
+  .cta .g{color:var(--em-soft);}
+  .links{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 16px;}
+  .lk{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--em-soft);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.4);border-radius:999px;padding:7px 13px;}
+  .sign{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px;margin-top:6px;}
+  .sign .who{font-size:15px;font-weight:700;color:var(--ink);}
+  .sign .who b{color:var(--em-soft);font-weight:500;}
+  .sign .ph{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;}
+</style>
+</head>
+<body>
+<div class="card">
+  <canvas class="fx" id="fx"></canvas>
+  <div class="ct">
+    <div class="head">
+      <img class="mark" src="yr-icon.png" alt="YourRender">
+      <div><div class="nm">Your<b>Render</b></div><div class="sub">Empire OS · AI</div><div class="hq">🇨🇭 Swiss Company</div></div>
+    </div>
+    <div class="hi" id="hi">Salut! 👋</div>
+    <div class="lead">Nu mai ai timp <span class="g">de nimic</span>.</div>
+    <p>Tu faci totul — mesaje, telefon, conținut, clienți, vânzări. Eu, <span class="g">Denis</span>, îți aduc <b>Your<span class="ren">Render</span></b>, un <b>ajutor</b> care preia exact tot ce-ți fură timpul: <span class="g">o inteligență artificială cu zeci de lucrători digitali</span>, setați pe o tehnologie avansată, ce lucrează în locul tău, <span class="g">24/7</span>.</p>
+    <p><span class="g">La noi funcționează deja</span> — nu sunt doar vorbe. Nu e o agenție de marketing cu oameni scumpi care lucrează doar ziua, nici un program pe care să-l administrezi singur: e <span class="g">un ajutor eficient, gata pregătit, care merge non-stop, fără zile de odihnă</span>.</p>
+    <div class="cta">Vrei să vezi cum ar funcționa la tine? <span class="g">Scrie-mi un mesaj</span> — îți răspund chiar eu. 🤝</div>
+    <div class="links">
+      <span class="lk">🌐 yourrender.ai</span>
+      <span class="lk">👁 yourrender.ai/artopolis</span>
+    </div>
+    <div class="sign">
+      <span class="who">Denis Boleacu <b>· Cofounder</b></span>
+      <span class="ph">+45 55 24 49 84</span>
+    </div>
+  </div>
+</div>
+<script>
+  (function(){try{var n=new URLSearchParams(location.search).get('n');if(n){n=n.trim().replace(/[<>]/g,'');if(n)document.getElementById('hi').textContent='Salut, '+n+'! 👋';}}catch(e){}})();
+  var c=document.getElementById('fx'),x=c.getContext('2d'),card=c.parentElement,W,H,P=[];
+  function size(){var r=card.getBoundingClientRect();W=c.width=r.width;H=c.height=r.height;P=[];var n=Math.max(30,Math.round(W*H/9000));for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18});}
+  function loop(){x.clearRect(0,0,W,H);for(var i=0;i<P.length;i++){var p=P[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;x.beginPath();x.arc(p.x,p.y,1.3,0,7);x.fillStyle='rgba(94,224,181,.34)';x.fill();for(var j=i+1;j<P.length;j++){var q=P[j],dx=p.x-q.x,dy=p.y-q.y,dd=dx*dx+dy*dy;if(dd<11000){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle='rgba(16,185,129,'+(.08*(1-dd/11000))+')';x.lineWidth=.6;x.stroke();}}}requestAnimationFrame(loop);}
+  size();loop();
+</script>
+</body>
+</html>

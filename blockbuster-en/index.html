@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Blockbuster × YourQuantix</title>
+<meta property="og:title" content="They laughed when they could have had it all.">
+<meta property="og:description" content="The Blockbuster story every entrepreneur should see in 2026. Swipe through 8 pages.">
+<meta property="og:image" content="https://denisboleacu.github.io/yourrender-carte/blockbuster-en/slide-en-1.png">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;}
+.track{display:flex;height:100vh;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;}
+.track::-webkit-scrollbar{display:none;}
+.page{flex:0 0 100%;height:100vh;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;}
+.page>img,.page>a>img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+.counter{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:10;
+  background:rgba(0,0,0,.55);color:#fff;font-size:14px;font-weight:700;letter-spacing:2px;
+  padding:6px 14px;border-radius:20px;backdrop-filter:blur(4px);}
+.dots{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:7px;}
+.dots b{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.32);transition:.25s;}
+.dots b.on{background:#22B7A8;transform:scale(1.3);}
+.nav{position:fixed;top:50%;transform:translateY(-50%);z-index:10;width:46px;height:46px;border:none;
+  border-radius:50%;background:rgba(0,0,0,.5);color:#fff;font-size:24px;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.nav:active{background:rgba(34,183,168,.85);}
+.prev{left:14px;}.next{right:14px;}
+.nav.hide{opacity:0;pointer-events:none;}
+.wa{position:fixed;bottom:44px;right:16px;z-index:11;display:flex;align-items:center;gap:8px;
+  background:#22B7A8;color:#08201e;font-size:14px;font-weight:800;letter-spacing:.3px;
+  padding:11px 16px;border-radius:26px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.4);}
+.wa svg{width:18px;height:18px;fill:#08201e;}
+.hint{position:fixed;bottom:44px;left:50%;transform:translateX(-50%);z-index:10;color:#22B7A8;
+  font-size:14px;font-weight:700;letter-spacing:1px;animation:pulse 1.6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:.45;}50%{opacity:1;}}
+@media(min-width:740px){.page>img,.page>a>img{height:96vh;}}
+@media(max-width:739px){.nav{display:none;}}
+</style>
+</head>
+<body>
+<div class="counter"><span id="cur">1</span> / 8</div>
+<div class="track" id="track">
+  <div class="page"><img src="slide-en-1.png" alt="1"></div>
+  <div class="page"><img src="slide-en-2.png" alt="2"></div>
+  <div class="page"><img src="slide-en-3.png" alt="3"></div>
+  <div class="page"><img src="slide-en-4.png" alt="4"></div>
+  <div class="page"><img src="slide-en-5.png" alt="5"></div>
+  <div class="page"><img src="slide-en-6.png" alt="6"></div>
+  <div class="page"><img src="slide-en-7.png" alt="7"></div>
+  <div class="page"><a href="https://wa.me/4555244984" target="_blank" rel="noopener" aria-label="Message me on WhatsApp"><img src="slide-en-8.png" alt="8"></a></div>
+</div>
+<button class="nav prev" onclick="go(-1)">‹</button>
+<button class="nav next" onclick="go(1)">›</button>
+<a class="wa" href="https://wa.me/4555244984" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.2-.2.3-.7.9-.8 1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.2-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.9-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4zM12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2z"/></svg>WhatsApp</a>
+<div class="dots" id="dots"></div>
+<div class="hint" id="hint">swipe →</div>
+<script>
+const track=document.getElementById('track'), N=8;
+const dots=document.getElementById('dots');
+for(let i=0;i<N;i++){const b=document.createElement('b');if(i===0)b.className='on';dots.appendChild(b);}
+function cur(){return Math.round(track.scrollLeft/track.clientWidth);}
+function paint(){const c=cur();document.getElementById('cur').textContent=c+1;
+  [...dots.children].forEach((b,i)=>b.className=i===c?'on':'');
+  document.querySelector('.prev').classList.toggle('hide',c===0);
+  document.querySelector('.next').classList.toggle('hide',c===N-1);
+  if(c>0){const h=document.getElementById('hint');if(h)h.style.display='none';}}
+function go(d){track.scrollTo({left:(cur()+d)*track.clientWidth,behavior:'smooth'});}
+track.addEventListener('scroll',()=>{clearTimeout(window._t);window._t=setTimeout(paint,60);});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1);});
+paint();
+</script>
+</body>
+</html>

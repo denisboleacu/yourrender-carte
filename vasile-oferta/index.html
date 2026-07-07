@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Vasile Cotlău — Lucrări din lemn</title>
 <meta property="og:title" content="Vasile Cotlău — lucrări din lemn la comandă">
-<meta property="og:description" content="Foișoare, terase, pergole, mese, copertine — trainice și deosebite. Glisează și cere oferta ta.">
+<meta property="og:description" content="Foișoare, terase, pergole, copertine — acum și cu iluminare LED caldă. Glisează și cere oferta ta.">
 <meta property="og:image" content="https://denisboleacu.github.io/yourrender-carte/vasile-oferta/slide-1.png">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Jost:wght@500;600;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{height:100%;background:#241a11;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;}
+:root{--cream:#F4EDDF;--gold:#C79A44;}
 .track{display:flex;height:100vh;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;}
 .track::-webkit-scrollbar{display:none;}
 .page{flex:0 0 100%;height:100vh;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;position:relative;}
@@ -17,30 +19,68 @@ html,body{height:100%;background:#241a11;font-family:-apple-system,BlinkMacSyste
 .counter{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:20;background:rgba(0,0,0,.55);color:#fff;font-size:14px;font-weight:700;letter-spacing:2px;padding:6px 14px;border-radius:20px;backdrop-filter:blur(4px);}
 .dots{position:fixed;bottom:118px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:6px;}
 .dots b{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.32);transition:.25s;}
-.dots b.on{background:#C79A44;transform:scale(1.3);}
+.dots b.on{background:var(--gold);transform:scale(1.3);}
 .nav{position:fixed;top:50%;transform:translateY(-50%);z-index:20;width:46px;height:46px;border:none;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
 .nav:active{background:rgba(199,154,68,.9);}
 .prev{left:14px;}.next{right:14px;}
 .nav.hide{opacity:0;pointer-events:none;}
-.hint{position:fixed;bottom:44px;left:50%;transform:translateX(-50%);z-index:20;color:#C79A44;font-size:14px;font-weight:700;letter-spacing:1px;animation:pulse 1.6s ease-in-out infinite;}
+.hint{position:fixed;bottom:44px;left:50%;transform:translateX(-50%);z-index:20;color:var(--gold);font-size:14px;font-weight:700;letter-spacing:1px;animation:pulse 1.6s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
-/* bara de acțiuni — apare pe ultima pagină */
+
+/* galerie HTML (pagina 2) */
+.galpage{width:100%;height:100vh;background:#1a120a;display:flex;flex-direction:column;padding:64px 22px 88px;}
+.galhead{flex:none;margin-bottom:14px;}
+.galhead .ov{font-family:'Jost';font-weight:600;letter-spacing:3px;text-transform:uppercase;font-size:13px;color:var(--gold);margin-bottom:6px;}
+.galhead .t{font-family:'Fraunces',serif;font-weight:800;font-size:40px;color:var(--cream);letter-spacing:-.5px;}
+.galhead .t span{color:var(--gold);}
+.grid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:10px;min-height:0;}
+.gcell{position:relative;overflow:hidden;border-radius:12px;border:2px solid rgba(199,154,68,.4);cursor:pointer;}
+.gcell img{width:100%;height:100%;object-fit:cover;display:block;}
+.gcell span{position:absolute;left:0;right:0;bottom:0;padding:20px 12px 8px;font-family:'Jost';font-weight:600;font-size:15px;color:#fff;background:linear-gradient(180deg,transparent,rgba(20,14,8,.88));}
+.gcell .zoom{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:rgba(20,14,8,.6);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--gold);}
+.galfoot{flex:none;text-align:center;margin-top:12px;font-family:'Jost';font-weight:700;font-size:20px;color:var(--gold);}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:60;background:rgba(10,7,4,.94);display:none;align-items:center;justify-content:center;flex-direction:column;padding:20px;}
+.lb.on{display:flex;}
+.lb img{max-width:100%;max-height:82vh;object-fit:contain;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.6);}
+.lb .cap{font-family:'Fraunces',serif;font-weight:600;font-size:26px;color:var(--cream);margin-top:18px;}
+.lb .x{position:fixed;top:18px;right:18px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;}
+
+/* bara de acțiuni — ultima pagină */
 .actions{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;gap:10px;padding:10px 14px calc(12px + env(safe-area-inset-bottom));
   background:linear-gradient(180deg,transparent,rgba(20,14,8,.9) 60%);}
 .actions.on{display:flex;}
-.actions a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border-radius:100px;
-  padding:11px 12px;font-weight:700;font-size:15px;box-shadow:0 8px 20px rgba(0,0,0,.4);}
+.actions a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border-radius:100px;padding:11px 12px;font-weight:700;font-size:15px;box-shadow:0 8px 20px rgba(0,0,0,.4);}
 .actions .tg{background:#2AABEE;color:#fff;}
-.actions .call{background:#C79A44;color:#241a11;}
+.actions .call{background:var(--gold);color:#241a11;}
 .actions a svg{width:18px;height:18px;flex:none;}
-@media(min-width:740px){.page>img{height:96vh;} .actions{max-width:420px;left:50%;transform:translateX(-50%);}}
+@media(min-width:740px){.page>img{height:96vh;} .actions{max-width:420px;left:50%;transform:translateX(-50%);} .galpage{max-width:620px;margin:0 auto;} .galhead .t{font-size:52px;} .gcell span{font-size:18px;}}
 </style>
 </head>
 <body>
 <div class="counter"><span id="cur">1</span> / 4</div>
 <div class="track" id="track">
   <div class="page"><img src="slide-1.png" alt="1"></div>
-  <div class="page"><img src="slide-2.png" alt="2"></div>
+
+  <div class="page">
+    <div class="galpage">
+      <div class="galhead">
+        <div class="ov">Lucrările noastre · acum cu iluminare LED</div>
+        <div class="t">Ce <span>construim</span></div>
+      </div>
+      <div class="grid" id="grid">
+        <div class="gcell" data-cap="Foișoare"><img src="g/foisoare.jpg"><span>Foișoare</span><div class="zoom">⤢</div></div>
+        <div class="gcell" data-cap="Terase acoperite"><img src="g/terase-acoperite.jpg"><span>Terase acoperite</span><div class="zoom">⤢</div></div>
+        <div class="gcell" data-cap="Pergole"><img src="g/pergole.jpg"><span>Pergole</span><div class="zoom">⤢</div></div>
+        <div class="gcell" data-cap="Mese & scaune"><img src="g/mese.jpg"><span>Mese & scaune</span><div class="zoom">⤢</div></div>
+        <div class="gcell" data-cap="Copertine"><img src="g/copertine.jpg"><span>Copertine</span><div class="zoom">⤢</div></div>
+        <div class="gcell" data-cap="Terase moderne"><img src="g/terase-moderne.jpg"><span>Terase moderne</span><div class="zoom">⤢</div></div>
+      </div>
+      <div class="galfoot">📞 078 842 446 · apasă pe o poză s-o vezi mare</div>
+    </div>
+  </div>
+
   <div class="page"><img src="slide-3.png" alt="3"></div>
   <div class="page"><img src="slide-4.png" alt="4"></div>
 </div>
@@ -61,6 +101,8 @@ html,body{height:100%;background:#241a11;font-family:-apple-system,BlinkMacSyste
   </a>
 </div>
 
+<div class="lb" id="lb"><button class="x" onclick="closeLb()">✕</button><img id="lbimg" src=""><div class="cap" id="lbcap"></div></div>
+
 <script>
 const track=document.getElementById('track'), N=4;
 const dots=document.getElementById('dots');
@@ -74,7 +116,13 @@ function paint(){const c=cur();document.getElementById('cur').textContent=c+1;
   if(c>0){const h=document.getElementById('hint');if(h)h.style.display='none';}}
 function go(d){track.scrollTo({left:(cur()+d)*track.clientWidth,behavior:'smooth'});}
 track.addEventListener('scroll',()=>{clearTimeout(window._t);window._t=setTimeout(paint,60);});
-document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1);});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1);if(e.key==='Escape')closeLb();});
+// lightbox
+document.querySelectorAll('.gcell').forEach(c=>{c.addEventListener('click',()=>{
+  const img=c.querySelector('img'); document.getElementById('lbimg').src=img.src;
+  document.getElementById('lbcap').textContent=c.dataset.cap; document.getElementById('lb').classList.add('on');});});
+function closeLb(){document.getElementById('lb').classList.remove('on');}
+document.getElementById('lb').addEventListener('click',e=>{if(e.target.id==='lb')closeLb();});
 paint();
 </script>
 </body>

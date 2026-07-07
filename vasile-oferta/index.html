@@ -24,7 +24,7 @@ html,body{height:100%;background:#241a11;font-family:-apple-system,BlinkMacSyste
 .nav:active{background:rgba(199,154,68,.9);}
 .prev{left:14px;}.next{right:14px;}
 .nav.hide{opacity:0;pointer-events:none;}
-.hint{position:fixed;bottom:44px;left:50%;transform:translateX(-50%);z-index:20;color:var(--gold);font-size:14px;font-weight:700;letter-spacing:1px;animation:pulse 1.6s ease-in-out infinite;}
+.hint{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);z-index:20;color:var(--gold);font-size:14px;font-weight:700;letter-spacing:1px;animation:pulse 1.6s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
 
 /* galerie HTML (pagina 2) */
@@ -48,9 +48,8 @@ html,body{height:100%;background:#241a11;font-family:-apple-system,BlinkMacSyste
 .lb .x{position:fixed;top:18px;right:18px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;}
 
 /* bara de acțiuni — ultima pagină */
-.actions{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;gap:10px;padding:10px 14px calc(12px + env(safe-area-inset-bottom));
-  background:linear-gradient(180deg,transparent,rgba(20,14,8,.9) 60%);}
-.actions.on{display:flex;}
+.actions{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;gap:10px;padding:10px 14px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,transparent,rgba(20,14,8,.92) 55%);}
 .actions a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border-radius:100px;padding:11px 12px;font-weight:700;font-size:15px;box-shadow:0 8px 20px rgba(0,0,0,.4);}
 .actions .tg{background:#2AABEE;color:#fff;}
 .actions .call{background:var(--gold);color:#241a11;}
@@ -112,7 +111,6 @@ function paint(){const c=cur();document.getElementById('cur').textContent=c+1;
   [...dots.children].forEach((b,i)=>b.className=i===c?'on':'');
   document.querySelector('.prev').classList.toggle('hide',c===0);
   document.querySelector('.next').classList.toggle('hide',c===N-1);
-  document.getElementById('actions').classList.toggle('on',c===N-1);
   if(c>0){const h=document.getElementById('hint');if(h)h.style.display='none';}}
 function go(d){track.scrollTo({left:(cur()+d)*track.clientWidth,behavior:'smooth'});}
 track.addEventListener('scroll',()=>{clearTimeout(window._t);window._t=setTimeout(paint,60);});
